@@ -1,0 +1,418 @@
+<title>Palesto Toulouse</title>
+<style>
+  :root{
+    --paper:#FBF6EE; --paper2:#F2E9D8; --cream:#FFFDF9; --line:#E7DBC4;
+    --ink:#1A1512; --ink-soft:#3A322C;
+    --black:#14110F; --black2:#201A16;
+    --red:#D62B22; --red2:#B01F19; --redglow:rgba(214,43,34,.35);
+    --gold:#F0A83A; --gold-ink:#7A4B10;
+    --white:#fff;
+    --radius-sm:10px; --radius:18px; --radius-lg:26px; --pill:999px;
+    --shadow-sm:0 2px 10px rgba(20,17,15,.12);
+    --shadow-md:0 14px 34px rgba(20,17,15,.20);
+    --ff-display:"Anton","Arial Narrow",sans-serif;
+    --ff-body:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --ease:cubic-bezier(.2,.8,.2,1);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  *{margin:0}
+  html{scroll-behavior:smooth;scroll-padding-top:70px}
+  body{
+    font-family:var(--ff-body);color:var(--ink-soft);background:var(--paper);
+    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    padding-inline:0;
+  }
+  img,svg{display:block;max-width:100%;height:auto}
+  a{color:var(--red);text-decoration:none}
+  h1,h2,h3{font-family:var(--ff-display);color:var(--ink);line-height:1.05;font-weight:400;letter-spacing:.01em;text-transform:uppercase;text-wrap:balance}
+  p{text-wrap:pretty}
+  ul{list-style:none;padding:0}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  :focus-visible{outline:3px solid var(--red);outline-offset:2px}
+  [hidden]{display:none!important}
+
+  .wrap{max-width:640px;margin-inline:auto;padding-inline:16px}
+  .section{padding-block:2.6rem}
+  .section--dark{background:var(--black);color:rgba(255,255,255,.86)}
+  .section--dark h2,.section--dark h3{color:#fff}
+  .section--paper2{background:var(--paper2)}
+  .eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+  .eyebrow::before{content:"";width:20px;height:3px;background:var(--gold);border-radius:2px}
+  .section--dark .eyebrow{color:var(--gold)}
+  .head{margin-bottom:1.4rem}
+  .head h2{font-size:clamp(1.6rem,7vw,2.1rem);margin-top:.5rem}
+  .head p{margin-top:.6rem;opacity:.85;font-size:.98rem}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.85rem 1.4rem;border-radius:var(--pill);font-weight:800;font-size:.92rem;transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+  .btn--red{background:var(--red);color:#fff}
+  .btn--red:active{transform:scale(.97)}
+  .btn--gold{background:var(--gold);color:var(--ink)}
+  .btn--ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5)}
+  .btn--dark-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+  .btn--block{width:100%}
+  .btn-row{display:flex;flex-direction:column;gap:.7rem}
+
+  /* Header */
+  header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);border-bottom:1px solid var(--line)}
+  .header-inner{display:flex;align-items:center;gap:.7rem;padding-block:.7rem}
+  .logo{display:flex;align-items:center;gap:.55rem}
+  .logo__mark{width:36px;height:36px;border-radius:10px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);font-size:1.1rem;flex-shrink:0}
+  .logo__text{display:flex;flex-direction:column;line-height:1.05}
+  .logo__name{font-family:var(--ff-display);font-size:1.15rem;color:var(--ink)}
+  .logo__tag{font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+  .header-actions{margin-left:auto;display:flex;align-items:center;gap:.5rem}
+  .navtoggle{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .navtoggle:active{background:var(--paper2)}
+  .navtoggle svg{width:20px;height:20px}
+  nav.mobile{max-height:0;overflow:hidden;transition:max-height .3s var(--ease);background:var(--cream);border-bottom:1px solid var(--line)}
+  nav.mobile.open{max-height:260px}
+  nav.mobile ul{display:flex;flex-direction:column;padding:.5rem 16px 1rem}
+  nav.mobile a{display:block;padding:.6rem 0;font-weight:800;color:var(--ink);text-transform:uppercase;font-size:.92rem;border-bottom:1px solid var(--line)}
+  nav.mobile a:last-child{border-bottom:0}
+
+  /* Hero */
+  .hero{position:relative;background:var(--black);color:#fff;overflow:hidden}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,17,15,.55) 0%,rgba(20,17,15,.97) 88%)}
+  .hero-inner{position:relative;z-index:1;padding-block:2.6rem 2.2rem}
+  .rating-pill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);padding:.4rem .8rem;border-radius:var(--pill);font-size:.78rem;font-weight:700;margin-bottom:1rem}
+  .rating-pill svg{width:14px;height:14px;color:var(--gold)}
+  .hero h1{font-size:clamp(2.1rem,11vw,2.7rem);color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.4)}
+  .hero h1 em{font-style:normal;color:var(--gold)}
+  .hero p{margin-top:1rem;color:rgba(255,255,255,.86);font-size:1rem;max-width:46ch}
+  .hero .btn-row{margin-top:1.5rem}
+  .proof{display:flex;gap:1.4rem;margin-top:1.8rem;flex-wrap:wrap}
+  .proof div{display:flex;flex-direction:column}
+  .proof strong{font-family:var(--ff-display);font-size:1.5rem;color:var(--gold)}
+  .proof span{font-size:.72rem;color:rgba(255,255,255,.7)}
+
+  /* Info bar */
+  .infobar{background:var(--red);color:#fff}
+  .info-grid{display:flex;flex-direction:column;gap:1rem;padding-block:1.4rem}
+  .info-item{display:flex;align-items:center;gap:.7rem}
+  .info-item svg{width:22px;height:22px;flex-shrink:0;color:var(--ink);background:var(--gold);border-radius:50%;padding:5px}
+  .info-item strong{display:block;font-size:.9rem}
+  .info-item span{display:block;font-size:.78rem;color:rgba(255,255,255,.85)}
+
+  /* Category cards */
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+  .cat-card{position:relative;display:block;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/5;background:var(--black);box-shadow:var(--shadow-sm)}
+  .cat-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .cat-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,17,15,0) 40%,rgba(20,17,15,.92) 100%)}
+  .cat-card__body{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:.9rem;color:#fff}
+  .cat-card__body h3{font-size:1.1rem;color:#fff}
+  .cat-card__body p{font-size:.72rem;color:rgba(255,255,255,.8);margin-top:.15rem}
+  .cat-card--wide{grid-column:span 2;aspect-ratio:16/8}
+
+  /* Menu */
+  .menu-jump{display:flex;gap:.5rem;overflow-x:auto;padding-block:.2rem 1.4rem;-webkit-overflow-scrolling:touch}
+  .menu-jump a{flex-shrink:0;padding:.55rem 1rem;border-radius:var(--pill);background:var(--cream);border:2px solid var(--line);font-weight:800;font-size:.78rem;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+  .menu-jump a:active{border-color:var(--red);color:var(--red)}
+  .menu-sec{margin-bottom:2.4rem;scroll-margin-top:64px}
+  .menu-sec__head{margin-bottom:1rem}
+  .menu-sec__head .num{color:var(--red);font-weight:800;font-size:.78rem;letter-spacing:.08em}
+  .menu-sec__head h2{font-size:1.5rem;margin-top:.3rem}
+  .menu-sec__note{font-size:.85rem;opacity:.75;margin-top:.3rem}
+
+  .dish{background:var(--cream);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);display:flex;gap:.9rem;padding:.7rem;margin-bottom:.8rem;align-items:center}
+  .dish img{width:76px;height:76px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0}
+  .dish__body{flex:1;min-width:0}
+  .dish__title{font-family:var(--ff-body);font-weight:800;font-size:.98rem;color:var(--ink);text-transform:none}
+  .dish__desc{font-size:.8rem;opacity:.8;margin-top:.1rem}
+  .dish__price{font-family:var(--ff-display);font-size:1.05rem;color:var(--red);white-space:nowrap;margin-left:.5rem}
+  .dish__row{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+
+  .opt{background:var(--cream);border:1px solid var(--line);border-radius:var(--radius-sm);padding:1rem 1.1rem;margin-bottom:.8rem}
+  .opt h4{font-family:var(--ff-body);font-weight:800;font-size:.85rem;color:var(--ink);text-transform:uppercase;letter-spacing:.02em;margin-bottom:.55rem;display:flex;align-items:center;gap:.45rem}
+  .opt h4 .n{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:var(--red);color:#fff;font-size:.68rem}
+  .opt ul{display:flex;flex-wrap:wrap;gap:.35rem}
+  .opt li{font-size:.76rem;font-weight:600;color:var(--ink-soft);background:var(--paper2);padding:.28rem .6rem;border-radius:var(--pill)}
+  .opt--hot li{background:#FBE3DE;color:var(--red2)}
+  .opt--price h4{color:var(--gold-ink)}
+  .formule{display:inline-flex;align-items:baseline;gap:.4rem;margin-top:.3rem}
+  .formule strong{font-family:var(--ff-display);font-size:1.3rem;color:var(--red)}
+  .formule span{font-size:.78rem;opacity:.8}
+
+  /* Reviews */
+  .review{background:var(--cream);border-radius:var(--radius);padding:1.2rem;box-shadow:var(--shadow-sm);margin-bottom:.9rem}
+  .stars{display:flex;gap:.15rem;margin-bottom:.7rem}
+  .stars svg{width:15px;height:15px;fill:var(--gold);color:var(--gold)}
+  .review blockquote{font-size:.9rem;color:var(--ink-soft)}
+  .review figcaption{margin-top:.7rem;font-size:.78rem;opacity:.75}
+  .review figcaption strong{display:block;color:var(--ink)}
+  .review .src{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--red)}
+
+  .value{background:var(--cream);border-radius:var(--radius);padding:1.2rem;box-shadow:var(--shadow-sm);margin-bottom:.9rem}
+  .value svg{width:26px;height:26px;color:var(--red);margin-bottom:.6rem}
+  .value h3{font-family:var(--ff-body);font-size:1rem;text-transform:none;color:var(--ink);font-weight:800}
+  .value p{margin-top:.35rem;font-size:.85rem;opacity:.85}
+
+  .cta-band{background:var(--red);color:#fff;border-radius:var(--radius-lg);padding:2rem 1.4rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.9rem}
+  .cta-band h2{color:#fff;font-size:1.7rem}
+  .cta-band p{color:rgba(255,255,255,.86);font-size:.92rem}
+
+  .contact-card{background:var(--cream);border-radius:var(--radius-lg);padding:1.3rem;box-shadow:var(--shadow-sm)}
+  .clist{display:flex;flex-direction:column;gap:1.1rem;margin-top:1rem}
+  .clist__item{display:flex;gap:.8rem;align-items:flex-start}
+  .clist__item svg{width:22px;height:22px;color:#fff;background:var(--red);border-radius:50%;padding:6px;flex-shrink:0}
+  .clist__item strong{display:block;color:var(--ink);font-size:.95rem;margin-bottom:.15rem}
+  .clist__item span,.clist__item a{font-size:.85rem;color:var(--ink-soft)}
+
+  footer.site{background:var(--black);color:rgba(255,255,255,.72);padding-block:2.4rem 1.4rem}
+  footer.site .logo__name,footer.site .logo__tag{color:#fff}
+  footer.site p.tag{margin-top:.9rem;font-size:.85rem;color:rgba(255,255,255,.6)}
+  .fsocial{display:flex;gap:.6rem;margin-top:1rem}
+  .fsocial a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center}
+  .fsocial a svg{width:17px;height:17px}
+  .flinks{margin-top:1.6rem;display:flex;flex-direction:column;gap:.5rem}
+  .flinks a{color:rgba(255,255,255,.72);font-size:.88rem}
+  .fbottom{border-top:1px solid rgba(255,255,255,.12);margin-top:1.6rem;padding-top:1.2rem;font-size:.74rem;color:rgba(255,255,255,.5)}
+
+  .order-sticky{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--black);padding:.7rem 16px calc(.7rem + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:space-between;gap:1rem;box-shadow:0 -8px 24px rgba(0,0,0,.3)}
+  .order-sticky span{color:#fff;font-weight:700;font-size:.82rem}
+  body{padding-bottom:70px}
+</style>
+
+<header class="site">
+  <div class="wrap header-inner">
+    <a class="logo" href="#top" aria-label="Palesto, accueil">
+      <span class="logo__mark" aria-hidden="true">P</span>
+      <span class="logo__text"><span class="logo__name">Palesto</span><span class="logo__tag">Tacos · Toulouse</span></span>
+    </a>
+    <div class="header-actions">
+      <button class="navtoggle" id="navtoggle" aria-expanded="false" aria-controls="mobilenav" aria-label="Ouvrir le menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile" id="mobilenav">
+    <ul>
+      <li><a href="#top">Accueil</a></li>
+      <li><a href="#carte">La carte</a></li>
+      <li><a href="#resto">Le resto</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://www.ubereats.com/fr/store/tik-tacos-palesto/zVcmVb8LVuixIjdcit_Mtg" target="_blank" rel="noopener" style="color:var(--red)">Commander →</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <img src="hero.jpg" alt="Tacos français Palesto garni, servi avec des frites">
+  <div class="wrap hero-inner">
+    <span class="rating-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.3 6.6.7-5 4.5 1.4 6.5L12 16.8 6.1 20l1.4-6.5-5-4.5 6.6-.7z"/></svg> 4,8/5 · 96 avis Google</span>
+    <h1>Le tacos français qui <em>claque</em>, à deux pas du Capitole</h1>
+    <p>Steak haché, kebab, poulet mariné ou falafel, sauce fromagère maison et frites croustillantes — composé minute, servi brûlant. Jusqu'à 1h du matin.</p>
+    <div class="btn-row">
+      <a class="btn btn--red btn--block" href="#carte">Voir la carte</a>
+      <a class="btn btn--ghost btn--block" href="https://www.ubereats.com/fr/store/tik-tacos-palesto/zVcmVb8LVuixIjdcit_Mtg" target="_blank" rel="noopener">Commander en livraison</a>
+    </div>
+    <div class="proof">
+      <div><strong>4,8/5</strong><span>96 avis Google</span></div>
+      <div><strong>1–10&nbsp;€</strong><span>par personne</span></div>
+      <div><strong>01h00</strong><span>fermeture, 7j/7</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="infobar">
+  <div class="wrap info-grid">
+    <div class="info-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9h16v11H4z"/><path d="M3 9 5 4h14l2 5"/></svg>
+      <span><strong>71 Rue Achille Viadieu</strong><span>31400 Toulouse</span></span>
+    </div>
+    <div class="info-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 3a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.5c1 .3 2 .6 3 .7a2 2 0 0 1 1.7 2.1z"/></svg>
+      <span><strong>05 32 58 06 95</strong><span>Sur place, à emporter, livraison</span></span>
+    </div>
+    <div class="info-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      <span><strong>Ouvert tous les jours</strong><span>Service jusqu'à 1h du matin</span></span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Notre carte</span>
+      <h2>Tacos, burgers &amp; snacks</h2>
+      <p>Tout se compose : ta viande, ta sauce, tes suppléments.</p>
+    </div>
+    <div class="cat-grid">
+      <a class="cat-card" href="#tacos"><img src="cat-tacos.jpg" alt="Tacos français garni"><div class="cat-card__body"><h3>Tacos</h3><p>Dès 6,50 €</p></div></a>
+      <a class="cat-card" href="#burger"><img src="cat-burger.jpg" alt="Burger maison"><div class="cat-card__body"><h3>Burgers</h3><p>Dès 6,00 €</p></div></a>
+      <a class="cat-card" href="#tikbox"><img src="cat-tikbox.jpg" alt="Tik Box frites gratinées"><div class="cat-card__body"><h3>Tik Box</h3><p>10,00 €</p></div></a>
+      <a class="cat-card cat-card--wide" href="#petites-faim"><img src="cat-petitesfaim.jpg" alt="Petites faims et panini"><div class="cat-card__body"><h3>Petites faims &amp; panini</h3><p>Dès 2,00 €</p></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper2" id="carte">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">La carte complète</span>
+      <h2>Composez votre commande</h2>
+    </div>
+    <nav class="menu-jump" aria-label="Aller à une catégorie">
+      <a href="#tacos">Tacos</a><a href="#sandwich">Sandwich</a><a href="#burger">Burger</a>
+      <a href="#assiettes">Assiettes</a><a href="#tikbox">Tik Box</a><a href="#petites-faim">Petites faims</a>
+    </nav>
+
+    <div class="menu-sec" id="tacos">
+      <div class="menu-sec__head"><span class="num">01 · Signature</span><h2>Tacos français</h2><p class="menu-sec__note">Base sauce fromagère &amp; frites incluses.</p></div>
+      <div class="dish"><img src="cat-tacos.jpg" alt="Tacos simple"><div class="dish__body"><div class="dish__row"><span class="dish__title">Tacos Simple</span><span class="dish__price">6,50 €</span></div><p class="dish__desc">1 viande au choix</p></div></div>
+      <div class="dish"><img src="hero.jpg" alt="Tacos double"><div class="dish__body"><div class="dish__row"><span class="dish__title">Tacos Double</span><span class="dish__price">8,50 €</span></div><p class="dish__desc">2 viandes au choix</p></div></div>
+      <div class="dish"><img src="cat-viande.jpg" alt="Tacos triple"><div class="dish__body"><div class="dish__row"><span class="dish__title">Tacos Triple</span><span class="dish__price">10,50 €</span></div><p class="dish__desc">3 viandes au choix</p></div></div>
+      <div class="opt"><h4><span class="n">1</span> Viande</h4><ul><li>Steak haché</li><li>Kebab</li><li>Poulet curry</li><li>Poulet pané</li><li>Falafel</li><li>Tenders</li></ul></div>
+      <div class="opt"><h4><span class="n">2</span> Sauce soft</h4><ul><li>Mayonnaise</li><li>Ketchup</li><li>Barbecue</li><li>Biggy</li><li>Blanche</li><li>Brésilienne</li></ul></div>
+      <div class="opt opt--hot"><h4><span class="n">3</span> Sauce hot</h4><ul><li>Andalouse</li><li>Marocaine</li><li>Algérienne</li><li>Samouraï</li><li>Moutarde</li><li>Harissa</li></ul></div>
+      <div class="opt opt--price"><h4><span class="n">4</span> Suppléments (+2,00 €)</h4><ul><li>Cheddar</li><li>Mozzarella</li><li>Chèvre miel</li><li>Raclette</li><li>Bacon de dinde</li><li>Olive</li><li>Poivrons</li></ul></div>
+    </div>
+
+    <div class="menu-sec" id="sandwich">
+      <div class="menu-sec__head"><span class="num">02 · Format pain</span><h2>Sandwich</h2></div>
+      <div class="opt"><h4><span class="n">1</span> Pain</h4><ul><li>Pain rond</li><li>Galette</li><li>Panini</li></ul></div>
+      <div class="opt"><h4><span class="n">2</span> Viande</h4><ul><li>Steak haché</li><li>Kebab</li><li>Merguez</li><li>Poulet curry</li><li>Falafel</li><li>Tenders</li></ul></div>
+      <div class="opt"><h4><span class="n">3</span> Base</h4><ul><li>Salade &amp; tomate</li><li>Fromage</li></ul></div>
+      <div class="formule"><strong>6,50 €</strong><span>seul · +1,50 € en menu</span></div>
+    </div>
+
+    <div class="menu-sec" id="burger">
+      <div class="menu-sec__head"><span class="num">03 · Gourmand</span><h2>Burger maison</h2></div>
+      <div class="dish"><img src="cat-burger.jpg" alt="Burger simple"><div class="dish__body"><div class="dish__row"><span class="dish__title">Burger Simple</span><span class="dish__price">6,00 €</span></div><p class="dish__desc">Steak, poulet pané ou galette</p></div></div>
+      <div class="dish"><img src="burger-detail.jpg" alt="Burger double"><div class="dish__body"><div class="dish__row"><span class="dish__title">Burger Double</span><span class="dish__price">8,00 €</span></div><p class="dish__desc">Deux bases au choix</p></div></div>
+      <div class="opt opt--price"><h4><span class="n">1</span> Suppléments (+1,00 €)</h4><ul><li>Bacon de dinde</li><li>Raclette</li><li>Boursin</li><li>Chèvre</li><li>Cheddar</li><li>Chorizo</li></ul></div>
+    </div>
+
+    <div class="menu-sec" id="assiettes">
+      <div class="menu-sec__head"><span class="num">04 · Sans pain</span><h2>Nos assiettes</h2><p class="menu-sec__note">Salade, oignon, tomate, frites + une viande au choix.</p></div>
+      <div class="dish"><img src="cat-viande.jpg" alt="Assiette viande"><div class="dish__body"><div class="dish__row"><span class="dish__title">Une viande au choix</span><span class="dish__price">10,50 €</span></div></div></div>
+      <div class="formule"><strong>10,50 €</strong><span>+1,50 € en menu</span></div>
+    </div>
+
+    <div class="menu-sec" id="tikbox">
+      <div class="menu-sec__head"><span class="num">05 · Signature</span><h2>Tik Box</h2></div>
+      <div class="dish"><img src="cat-tikbox.jpg" alt="Tik Box"><div class="dish__body"><div class="dish__row"><span class="dish__title">Tik Box</span><span class="dish__price">10,00 €</span></div><p class="dish__desc">Frites gratinées, viande, sauce</p></div></div>
+      <div class="formule"><strong>10,00 €</strong><span>+1,50 € en menu</span></div>
+    </div>
+
+    <div class="menu-sec" id="petites-faim">
+      <div class="menu-sec__head"><span class="num">06 · À grignoter</span><h2>Petites faims &amp; panini</h2></div>
+      <div class="dish"><img src="cat-petitesfaim.jpg" alt="Chicken tenders"><div class="dish__body"><div class="dish__row"><span class="dish__title">Chicken Tenders (4 pcs)</span><span class="dish__price">5,50 €</span></div></div></div>
+      <div class="dish"><img src="cat-tikbox.jpg" alt="Onion rings"><div class="dish__body"><div class="dish__row"><span class="dish__title">Onion Rings</span><span class="dish__price">4,00 €</span></div></div></div>
+      <div class="dish"><img src="hero.jpg" alt="Frites"><div class="dish__body"><div class="dish__row"><span class="dish__title">Frites (portion)</span><span class="dish__price">2,00 €</span></div></div></div>
+      <div class="dish"><img src="cat-panini.jpg" alt="Panini 3 fromages"><div class="dish__body"><div class="dish__row"><span class="dish__title">Panini 3 Fromages</span><span class="dish__price">5,50 €</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="resto">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Le resto</span>
+      <h2>Un snack de quartier, fait minute</h2>
+      <p>Toutes nos viandes sont halal, grillées à la commande, à deux pas du Capitole.</p>
+    </div>
+    <img src="kitchen.jpg" alt="Préparation d'un burger en cuisine" style="border-radius:var(--radius-lg);box-shadow:var(--shadow-md);margin-bottom:1.2rem">
+    <div class="value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/></svg><h3>100% halal</h3><p>Toutes nos viandes sont halal, grillées ou panées à la commande.</p></div>
+    <div class="value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><h3>Ouvert jusqu'à 1h</h3><p>Service continu en soirée, 7j/7, sur place, à emporter ou en livraison.</p></div>
+  </div>
+</section>
+
+<section class="section section--paper2">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">Avis clients</span><h2>Ce qu'on dit sur Google</h2></div>
+    <figure class="review">
+      <div class="stars"><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.7-5 4.5 1.4 6.5L12 16.8 6.1 20l1.4-6.5-5-4.5 6.6-.7z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.7-5 4.5 1.4 6.5L12 16.8 6.1 20l1.4-6.5-5-4.5 6.6-.7z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.7-5 4.5 1.4 6.5L12 16.8 6.1 20l1.4-6.5-5-4.5 6.6-.7z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.7-5 4.5 1.4 6.5L12 16.8 6.1 20l1.4-6.5-5-4.5 6.6-.7z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.7-5 4.5 1.4 6.5L12 16.8 6.1 20l1.4-6.5-5-4.5 6.6-.7z"/></svg></div>
+      <blockquote>« Restaurant exceptionnel, très bon accueil, très propre et l'équipe est très professionnelle, à recommander sans hésiter. »</blockquote>
+      <figcaption><strong>Basma B.</strong><span class="src">Avis Google</span></figcaption>
+    </figure>
+    <figure class="review">
+      <div class="stars"><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.7-5 4.5 1.4 6.5L12 16.8 6.1 20l1.4-6.5-5-4.5 6.6-.7z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.7-5 4.5 1.4 6.5L12 16.8 6.1 20l1.4-6.5-5-4.5 6.6-.7z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.7-5 4.5 1.4 6.5L12 16.8 6.1 20l1.4-6.5-5-4.5 6.6-.7z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.7-5 4.5 1.4 6.5L12 16.8 6.1 20l1.4-6.5-5-4.5 6.6-.7z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.3 6.6.7-5 4.5 1.4 6.5L12 16.8 6.1 20l1.4-6.5-5-4.5 6.6-.7z"/></svg></div>
+      <blockquote>« Impressionné par la qualité de ce tacos. Les frites sont croustillantes à l'extérieur et fondantes à l'intérieur. »</blockquote>
+      <figcaption><strong>Nabil I.</strong><span class="src">Avis Google</span></figcaption>
+    </figure>
+    <p style="text-align:center;font-weight:700;color:var(--ink);margin-top:1rem">4,8/5 sur 96 avis Google</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cta-band">
+      <span class="eyebrow" style="color:var(--gold)">Une envie, là ?</span>
+      <h2>Ton tacos t'attend</h2>
+      <p>71 Rue Achille Viadieu, Toulouse. Sur place, à emporter ou livré jusqu'à 1h du matin.</p>
+      <div class="btn-row" style="width:100%">
+        <a class="btn btn--dark-ghost btn--block" style="background:#fff" href="https://www.ubereats.com/fr/store/tik-tacos-palesto/zVcmVb8LVuixIjdcit_Mtg" target="_blank" rel="noopener">Commander la livraison</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper2" id="contact">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">Contact &amp; accès</span><h2>On vous attend</h2></div>
+    <div class="contact-card">
+      <div class="clist">
+        <div class="clist__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9h16v11H4z"/><path d="M3 9 5 4h14l2 5"/></svg><span><strong>Adresse</strong><span>71 Rue Achille Viadieu, 31400 Toulouse</span></span></div>
+        <div class="clist__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 3a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.5c1 .3 2 .6 3 .7a2 2 0 0 1 1.7 2.1z"/></svg><span><strong>Téléphone</strong><a href="tel:+33532580695">05 32 58 06 95</a></span></div>
+        <div class="clist__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span><strong>Horaires</strong><span>Tous les jours, jusqu'à 01h00</span></span></div>
+      </div>
+      <div class="btn-row" style="margin-top:1.3rem">
+        <a class="btn btn--red btn--block" href="https://www.google.com/maps/place/Palesto+tacos/@43.5886555,1.4442597,17z" target="_blank" rel="noopener">Itinéraire Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <span class="logo__mark" aria-hidden="true">P</span>
+      <span class="logo__text"><span class="logo__name">Palesto</span><span class="logo__tag">Tacos · Toulouse</span></span>
+    </a>
+    <p class="tag">Tacos français, burgers et snacks halal composés minute, à deux pas du Capitole.</p>
+    <div class="fsocial">
+      <a href="https://www.facebook.com/OPalestoFood/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+    </div>
+    <div class="flinks">
+      <a href="#carte">La carte</a>
+      <a href="#resto">Le resto</a>
+      <a href="#contact">Contact</a>
+      <a href="tel:+33532580695">05 32 58 06 95</a>
+    </div>
+    <div class="fbottom">© 2026 Palesto — Site vitrine réalisé à titre de proposition commerciale.</div>
+  </div>
+</footer>
+
+<div class="order-sticky" id="orderbar" hidden>
+  <span>Une envie de tacos ?</span>
+  <a class="btn btn--red" style="padding:.55rem 1.1rem;font-size:.82rem" href="https://www.ubereats.com/fr/store/tik-tacos-palesto/zVcmVb8LVuixIjdcit_Mtg" target="_blank" rel="noopener">Commander</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var toggle = document.getElementById("navtoggle");
+  var nav = document.getElementById("mobilenav");
+  if (toggle && nav) {
+    toggle.addEventListener("click", function(){
+      var open = nav.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    nav.addEventListener("click", function(e){
+      if (e.target.tagName === "A") { nav.classList.remove("open"); toggle.setAttribute("aria-expanded","false"); }
+    });
+  }
+  var bar = document.getElementById("orderbar");
+  if (bar) {
+    window.addEventListener("scroll", function(){
+      bar.hidden = window.scrollY < 500;
+    }, { passive: true });
+  }
+})();
+</script>
